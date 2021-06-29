@@ -4,7 +4,7 @@ using namespace std;
 class BIT {
 public:
     vector<int> biTree;
-    BIT(vector<int>&arr): biTree{vector<int>(arr.size() +1, 0)} {
+    BIT(vector<int>& arr): biTree{vector<int>(arr.size() +1, 0)} {
         for (int i=0;i<arr.size(); i++) {
             update(i, arr[i]);
         }
