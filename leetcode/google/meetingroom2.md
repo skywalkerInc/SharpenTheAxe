@@ -15,7 +15,7 @@ public:
         
         int ret = 0;
         
-        //sort intervals based on start time        
+        //sort intervals based on start time
         sort(intervals.begin(), intervals.end(), comparator);
         
         for(int i=0; i<intervals.size(); i++) {
