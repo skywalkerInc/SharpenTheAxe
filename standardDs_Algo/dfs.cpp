@@ -99,8 +99,8 @@ public:
 
 class Dfs: public Graph {
 public:
+    unordered_map <int, bool> visited;
     void dfs(map<int, vector<int>> &adj, int startNode) {
-        unordered_map <int, bool> visited;
         for (auto &edges: adj) {
             visited[edges.first] = false;
             for (auto &nbr: edges.second) {
@@ -122,6 +122,17 @@ public:
             }
         }
     }
+
+    void dfsRec(map<int, vector<int>> &adj, int startNode) {
+        visited[startNode] = true;
+        cout << startNode << " " << endl;
+        for (auto &nbr: adj[startNode]) {
+            if (!visited[nbr]) {
+                dfsRec(adj, nbr);
+            }
+        }
+        visited[startNode] = false;
+    }
 };
 
 
@@ -129,7 +140,12 @@ int main() {
     Dfs dfs = Dfs();
     map<int, vector<int>> adj = dfs.getAdjListMap();
     dfs.printAdjList(adj);
+    cout << "dfs iterative" << endl;
     dfs.dfs(adj, 1);
+    
+    cout << "dfs recursive" << endl;
+    dfs.visited.clear();
+    dfs.dfsRec(adj, 1);
     cout << "\nmain execution complete" << endl;
     return 0;
 }
