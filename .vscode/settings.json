@@ -45,5 +45,8 @@
         "streambuf": "cpp",
         "typeinfo": "cpp"
     },
-    "cSpell.enabled": false
+    "cSpell.enabled": false,
+    "html.autoClosingTags": false,
+    "javascript.autoClosingTags": false,
+    "typescript.autoClosingTags": false
 }

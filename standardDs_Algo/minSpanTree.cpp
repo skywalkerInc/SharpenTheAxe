@@ -188,6 +188,40 @@ public:
         return ret;
 
     }
+
+    vector<Edge> edgeW = {
+        Edge {1,2,1},
+        Edge {1,3,1},
+        Edge {2,3,1},
+        Edge {2,4,2},
+        Edge {3,4,1},
+    };
+
+    struct Edge {
+    int u;
+    int v;
+    int w;
+        Edge(int u, int v, int w): u(u), v(v), w(w) {}
+    };
+    // for simplicity lets take node form 0 to 10!
+    vector<NODE> nodeList = {0,1,2,3,4,5,6};
+    vector<Edge> res;
+
+    void krushkals() {
+        
+        priority_queue <Edge> pq;
+        for (auto &edge: edgeW) {
+            pq.push(edge);
+        }
+
+        Dset dset(nodeList.size());
+        while(!pq.empty()) {
+            Edge edge = pq.top(); pq.pop();
+            if (dset.merge(edge.u, edge.v)) {
+                res.push_back(edge);
+            }
+        }
+    }
 };
 
 int main() {

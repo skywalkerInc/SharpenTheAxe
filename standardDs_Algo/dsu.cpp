@@ -56,8 +56,8 @@ public:
     }
     bool merge(int u, int v) {
         numOfOperations++;
-        int pu = find(u);
-        int pv = find(v);
+        int pu = find(u); // will be always negative
+        int pv = find(v); // will be always negative
         if (pu == pv) return false;
         if (parent[pu] < parent[pv]) {
             parent[pu] += parent[pv];
@@ -89,8 +89,8 @@ public:
     }
     bool merge(int u, int v) {
         numOfOperations++;
-        int pu = find(u);
-        int pv = find(v);
+        int pu = find(u); // will always be negative
+        int pv = find(v); // will always be negative
         if (pu == pv) return false;
         if (parent[pu] < parent[pv]) {
             parent[pv] = pu;
