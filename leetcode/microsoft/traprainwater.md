@@ -1,48 +1,70 @@
 # My solution
+``` c++
+class Solution {
+public:
+    
+    int trap(vector<int>& height) {        
+        int n = height.size();
+        vector<int> left(n, 0);
+        vector<int> right(n, 0);
+        
+        int left_max = 0;
+        for (int i=0; i<n; ++i) {
+            left[i] = left_max;
+            if (height[i] > left_max) left_max = height[i];
+        }
+        
+        int rightMax = 0;
+        for (int i=n-1; i>=0; --i) {
+            right[i] = rightMax;
+            if (height[i] > rightMax) rightMax = height[i];
+            
+        }
+        
+        int res = 0;
+        for (int i=0; i<n; i++) {
+            if (left[i] > height[i] && right[i] > height[i]) {
+                res += min(left[i], right[i]) - height[i];
+            }
+        }
+        
+        return res;
+        
+    }
+};
 ```
-class Solution:
-    def trap(self, height: List[int]) -> int:
-        lmax = []
-        rmax = []
+
+```c++
+class Solution {
+public:
+    int trap(vector<int>& height) {        
+        int n = height.size();
+        int res = 0; 
+        int curr=0;
+        stack<int> st;
         
-        n = len(height)
-        if n == 0:
-            return 0
-        
-        prevmax = [0, height[0]]
-        lmax.append(-1)
-        for i in range(1, n):
-            if height[i] < prevmax[1]:
-                lmax.append(prevmax[0])
-            else:
-                lmax.append(-1)
-                prevmax = [i, height[i]]
-        
-        # print(lmax)
-        
-        prevmax = [n-1, height[n-1]]
-        rmax.append(-1)
-        for i in range(n-2, -1, -1):
-            if height[i] < prevmax[1]:
-                rmax.append(prevmax[0])
-            else:
-                rmax.append(-1)
-                prevmax = [i, height[i]]
+        while (curr < n) {
+            while (!st.empty() && height[curr] > height[st.top()]) {
+                int top = st.top(); 
+                st.pop();
+                if (st.empty()) 
+                    break;
+                int dist = curr - st.top() - 1;
+                int bound_height = min(height[curr], height[st.top()]) - height[top];
+                res += dist * bound_height;
+            }
                 
-        rmax = rmax[::-1]
-        # print(rmax)
+            st.push(curr++);
+        }
         
-        water = 0
-        for i in range(n):
-            if lmax[i] == -1 or rmax[i] == -1:
-                water += 0
-            else:
-                water += min(height[lmax[i]], height[rmax[i]]) - height[i]
-        return water
+        return res;
+    }
+};
+
 ```
 
 # Solution 2 pointers
-```
+``` c++
 int trap(vector<int>& height)
 {
     int left = 0, right = height.size() - 1;

@@ -124,7 +124,7 @@ public:
     map<int, int> djkshatra(map<int, vector<pair<int, int>>> &adj, int src) {
         map<int, int> dist;
         map<int, bool> visited;
-        priority_queue <pair<int, int>> pq; //{dist, node}
+        
 
         for(auto &edges: adj) {
             dist[edges.first] = this->INF;
@@ -134,19 +134,19 @@ public:
                 visited[nbr.second] = this->INF;
             }
         }
-        dist[src] = 0;
 
+        priority_queue <pair<int, int>> pq; //{dist, node}
+        dist[src] = 0;
         pq.push({dist[src], src});
-        while (!pq.empty()) {
-            int u = pq.top().second; pq.pop();
-            if (!visited[u]) {
-                for (auto &nbr: adj[u]) {
-                    int v = nbr.first;
-                    int w = nbr.second;
-                    if (dist[v] > dist[u] + w) {
-                        dist[v] = dist[u] + w;
-                        pq.push({dist[v], v});
-                    }
+        
+        while(!pq.empty()) {
+            int node = pq.top().second; pq.pop();
+            for (auto &nbr: adj[node]) {
+                int nbrv = nbr.first;
+                int nbrw = nbr.second;
+                if (dist[nbrv] > dist[node] + nbrw) {
+                    dist[nbrv] = dist[node] + nbrw;
+                    pq.push({dist[nbrv], nbrv});
                 }
             }
         }

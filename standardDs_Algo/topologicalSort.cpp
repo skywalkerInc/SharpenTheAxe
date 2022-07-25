@@ -153,6 +153,53 @@ public:
 
     }
 
+    // for simplicity lets take node form 0 to 10!
+    vector<NODE> nodeList = {0,1,2,3,4,5,6};
+    vector <bool> visited;
+    stack<NODE> st;
+    void tSort(map<int, vector<int>> &adj) {
+        // find indegree
+        vector<NODE> indegree(nodeList.size(), 0);
+        for (auto &edge: adj) {
+            for(auto &nbr: adj[edge.first]) {
+                indegree[nbr] += 1;
+            }
+        }
+
+        //Create a queue and push all node with indegree 0
+        queue<NODE> que;
+        for(auto &node: nodeList) {
+            if (indegree[node] == 0) {
+                que.push(node);
+            }
+        }
+
+        // do a bfs and push the node with indegree into queue and decrease indegree for each neighbour
+        vector<NODE> sortedNode;
+        int cnt = 0;
+        while(!que.empty()) {
+            NODE node = que.front(); que.pop();
+            sortedNode.push_back(node);
+
+            for(auto &nbr: adj[node]) {
+                indegree[nbr] -= 1;
+                if (indegree[nbr] == 0) {
+                    que.push(nbr);
+                }
+            }
+
+            cnt++;
+        }
+
+        if (cnt != nodeList.size()) {
+            cout << "cycle found" << endl;
+        }
+
+        for (auto &node: sortedNode) {
+            cout << node << endl;
+        }
+    }
+
 };
 
 int main() {
