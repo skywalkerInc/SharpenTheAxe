@@ -1,3 +1,11 @@
+/*
+BIT array element i will store sum from j+1 -> i, where j = index after removing last bit of i (i - i&-i)
+
+Any BIT array will store partial sum
+
+*/
+
+
 #include <bits/stdc++.h>
 using namespace std;
 

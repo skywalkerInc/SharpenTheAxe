@@ -28,6 +28,9 @@ steps:
 * O(V⋅E) 
 
 
+Bellman fordxs
+-> directed graph: work with negative edges but does not work with negative weight cycle
+-> undirected graph: does not work with negative edges since one edge in undirected graph will be 2 edges and if its negative, that will be seen as negative weight cycle.
 
 */
 
@@ -41,7 +44,7 @@ Below code is for directed pair, thats why no visited is required!
 */
 void djkshatra(vector<vector<pair<int,int>>> adjlist, int source) 
 {
-    vector<int> dist(n+1, INT_MAX);
+    vector<int> dist(n, INT_MAX);
 
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; // {dist, node}
     pq.push({0, source}); //src is k, dist of k from k is 0
@@ -70,17 +73,28 @@ void djkshatra(vector<vector<pair<int,int>>> adjlist, int source)
 
 
 void bellmandford(int n, vector<vector<int>>& edges, int source) {
-    vector<int> curr(n, INT_MAX);
-    curr[source] = 0;
+
+    //dist
+    vector<int> curr(n, INT_MAX); //main
+    vector<int> prev(n, INT_MAX);
+
+    prev[source] = 0;
     for (int i=0; i<n-1; ++i) { // n-1 time relaxation + for 0 edges = total n times
+        
+        curr[source] = 0;
+
         for(auto &edge: edges) {
             int u = edge[0];
             int v = edge[1];
             int w = edge[2];
 
-            curr[v] = min(curr[v], prev[u] + w);
+            if (prev[u] < INT_MAX)
+                curr[v] = min(curr[v], prev[u] + w);
         }
+
+        prev.assign(curr.begin(), curr.end());
     }
 
-    
+    // curr array will contain minimum distance from all source
+
 }
