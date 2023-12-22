@@ -42,7 +42,7 @@ adjlist:
 
 Below code is for directed pair, thats why no visited is required!
 */
-void djkshatra(vector<vector<pair<int,int>>> adjlist, int source) 
+vector<int> djkshatra(vector<vector<pair<int,int>>> adjlist, int source) 
 {
     vector<int> dist(n, INT_MAX);
 
@@ -69,6 +69,8 @@ void djkshatra(vector<vector<pair<int,int>>> adjlist, int source)
             }
         }
     }
+
+    return dist;
 }
 
 
